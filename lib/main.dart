@@ -1,79 +1,94 @@
-import 'package:first_app/answers.dart';
-import 'package:first_app/questions.dart';
+import 'package:first_app/quiz.dart';
+import 'package:first_app/results.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(const Myapp());
 
 class Myapp extends StatefulWidget {
-  const Myapp({super.key});
+  const Myapp({key});
 
   @override
   State<Myapp> createState() => _MyappState();
 }
 
 class _MyappState extends State<Myapp> {
-  var questionsIndex = 0;
+  final _questions = const [
+    {
+      'questionsText': 'What is your Income ?',
+      'answer': [
+        {'text': '15', 'score': 10},
+        {'text': '25', 'score': 20},
+        {'text': '35', 'score': 30},
+        {'text': '45', 'score': 40},
+      ]
+    },
+    {
+      'questionsText': 'What do you do ?',
+      'answer': [
+        {'text': 'students', 'score': 10},
+        {'text': 'un-employed', 'score': 5},
+        {'text': 'job', 'score': 20},
+        {'text': 'Business', 'score': 40},
+      ],
+    },
+    {
+      'questionsText': 'What is Flutter',
+      'answer': [
+        {'text': 'Frame-Work', 'score': 20},
+        {'text': 'Ui-desigin', 'score': 10},
+        {'text': 'SDK', 'score': 15},
+      ],
+    }
+  ];
+  var _questionsIndex = 0;
+  var _totalScore = 0;
 
   //creating functions
-  void getAnswer() {
+  void _getAnswer(int score) {
+    _totalScore = _totalScore + score;
     setState(() {
-      questionsIndex = questionsIndex + 1;
+      _questionsIndex = _questionsIndex + 1;
     });
-    print(questionsIndex);
+    // print(questionsIndex);
+    if (_questionsIndex < _questions.length) {
+      print(
+        'We do not have more question for you ',
+      );
+    } else {
+      print(
+        'No more question',
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      {
-        'questionsText': 'What is your age ?',
-        'answer': [
-          '15',
-          '25',
-          '35',
-          '45',
-        ]
-      },
-      {
-        'questionsText': 'What do you do ?',
-        'answer': [
-          'Student',
-          'Job',
-          'Business',
-          'Un-employed',
-        ],
-      },
-      {
-        'questionsText': 'What is Flutter',
-        'answer': [
-          'Framework',
-          'Language',
-          'Complier',
-        ],
-      }
-    ];
-
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
           appBar: AppBar(
             title: const Text(
               'First app ',
             ),
           ),
-          body: Column(children: [
-            Questions(
-              questions: questions[questionsIndex]['questionsText'] as String,
-              // (questions[questionsIndex]['answer'] as List<String>)
-              //     .map((answer) {
-              //   return Answer(selecthandler: getAnswer, answerText: answer);
-              // }).toList(),
-            ),
-            ...(questions[questionsIndex]['answer'] as List<String>)
-                .map((answer) {
-              return Answer(selecthandler: getAnswer, answerText: answer);
-            }).toList()
-          ]),
+          body: _questionsIndex < _questions.length
+              ? Quiz(
+                  questions: _questions,
+                  getAnswer: _getAnswer,
+                  questionsIndex: _questionsIndex)
+              // Column(children: [
+              //     Questions(
+              //       questions:
+              //           questions[questionsIndex]['questionsText'] as String,
+              //     ),
+              //     //Questions
+
+              //     ...(questions[questionsIndex]['answer'] as List<String>)
+              //         .map((answer) {
+              //       return Answer(selecthandler: getAnswer, answerText: answer);
+              //     }).toList()
+              //   ])
+              : Results(resultScore: _totalScore)
 
           // ElevatedButton(
           //   style: ButtonStyle(
@@ -98,6 +113,7 @@ class _MyappState extends State<Myapp> {
           //   },
           //   child: const Text('Answer 3'),
           // ),
-        ));
+          ),
+    );
   }
 }

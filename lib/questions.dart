@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class Questions extends StatelessWidget {
   final String questions;
-  const Questions({super.key, required this.questions});
+  const Questions({key, required this.questions});
 
   @override
   Widget build(BuildContext context) {
