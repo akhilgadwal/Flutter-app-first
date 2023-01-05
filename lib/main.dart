@@ -1,3 +1,4 @@
+import 'package:first_app/practice/main.dart';
 import 'package:first_app/quiz.dart';
 import 'package:first_app/results.dart';
 import 'package:flutter/material.dart';
@@ -43,12 +44,20 @@ class _MyappState extends State<Myapp> {
   var _questionsIndex = 0;
   var _totalScore = 0;
 
+  void restartQuiz() {
+    setState(() {
+      _questionsIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
   //creating functions
   void _getAnswer(int score) {
     _totalScore = _totalScore + score;
     setState(() {
       _questionsIndex = _questionsIndex + 1;
     });
+
     // print(questionsIndex);
     if (_questionsIndex < _questions.length) {
       print(
@@ -65,55 +74,58 @@ class _MyappState extends State<Myapp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text(
-              'First app ',
-            ),
-          ),
-          body: _questionsIndex < _questions.length
-              ? Quiz(
-                  questions: _questions,
-                  getAnswer: _getAnswer,
-                  questionsIndex: _questionsIndex)
-              // Column(children: [
-              //     Questions(
-              //       questions:
-              //           questions[questionsIndex]['questionsText'] as String,
-              //     ),
-              //     //Questions
+      home: Myapp1(),
+      // home: Scaffold(
+      //     appBar: AppBar(
+      //       title: const Text(
+      //         'First app ',
+      //       ),
+      //     ),
+      //     body: _questionsIndex < _questions.length
+      //         ? Quiz(
+      //             questions: _questions,
+      //             getAnswer: _getAnswer,
+      //             questionsIndex: _questionsIndex)
+      //         // Column(children: [
+      //         //     Questions(
+      //         //       questions:
+      //         //           questions[questionsIndex]['questionsText'] as String,
+      //         //     ),
+      //         //     //Questions
 
-              //     ...(questions[questionsIndex]['answer'] as List<String>)
-              //         .map((answer) {
-              //       return Answer(selecthandler: getAnswer, answerText: answer);
-              //     }).toList()
-              //   ])
-              : Results(resultScore: _totalScore)
+      //         //     ...(questions[questionsIndex]['answer'] as List<String>)
+      //         //         .map((answer) {
+      //         //       return Answer(selecthandler: getAnswer, answerText: answer);
+      //         //     }).toList()
+      //         //   ])
+      //         : Results(
+      //             resultScore: _totalScore,
+      //             restHandler: restartQuiz,
+      //           )
 
-          // ElevatedButton(
-          //   style: ButtonStyle(
-          //     backgroundColor: MaterialStateProperty.all(Colors.red),
-          //   ),
-          //   //creating ayn functions
-          //   onPressed: () {
-          //     print(
-          //       'Answer 2 is chosen',
-          //     );
-          //   },
-          //   child: const Text('Answer 2'),
-          // ),
-          // ElevatedButton(
-          //   style: ButtonStyle(
-          //     backgroundColor: MaterialStateProperty.all(Colors.red),
-          //   ),
-          //   onPressed: () {
-          //     print(
-          //       'Answer 3 is chosen',
-          //     );
-          //   },
-          //   child: const Text('Answer 3'),
-          // ),
-          ),
+      // ElevatedButton(
+      //   style: ButtonStyle(
+      //     backgroundColor: MaterialStateProperty.all(Colors.red),
+      //   ),
+      //   //creating ayn functions
+      //   onPressed: () {
+      //     print(
+      //       'Answer 2 is chosen',
+      //     );
+      //   },
+      //   child: const Text('Answer 2'),
+      // ),
+      // ElevatedButton(
+      //   style: ButtonStyle(
+      //     backgroundColor: MaterialStateProperty.all(Colors.red),
+      //   ),
+      //   onPressed: () {
+      //     print(
+      //       'Answer 3 is chosen',
+      //     );
+      //   },
+      //   child: const Text('Answer 3'),
+      // ),
     );
   }
 }

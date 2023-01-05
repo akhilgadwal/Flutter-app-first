@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class Results extends StatelessWidget {
   final int resultScore;
-  const Results({super.key, required this.resultScore});
+  final VoidCallback restHandler;
+  const Results(
+      {super.key, required this.resultScore, required this.restHandler});
 
   String get resultsPharse {
     var resultsText = 'score';
@@ -23,12 +26,22 @@ class Results extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(
-        resultsPharse,
-        style: TextStyle(
-          fontSize: 28,
-          fontWeight: FontWeight.bold,
-        ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            resultsPharse,
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          TextButton(
+              onPressed: restHandler,
+              child: Text(
+                'Restart-Quiz',
+              ))
+        ],
       ),
     );
   }
